@@ -9,17 +9,16 @@ application:
       backend: file:///lzcapp/pkg/content/licenses/
     - location: /
       backend: http://imgcompress:5000/
-
 services:
   imgcompress:
-    # upstream: docker.io/karimz1/imgcompress:1.0.0-rc.9 (amd64 sha256:212a8186fd869dd6db)
+    # upstream: docker.io/karimz1/imgcompress:1.0.0-rc.9
     image: docker.1ms.run/karimz1/imgcompress:1.0.0-rc.9
     environment:
       - TZ=Asia/Shanghai
       # keep storage management off: app has no built-in auth (upstream README),
       # the platform entry authentication is the only gate
       - DISABLE_STORAGE_MANAGEMENT=true
-    # no binds: temporary_storage=/tmp inside container, auto-cleaned (app.json)
+      # no binds: temporary_storage=/tmp inside container, auto-cleaned (app.json)
 usage: |
   ImgCompress 是一个自托管的图片处理工具箱：压缩、格式转换（支持 70+ 种输入格式，
   含 PSD / HEIC / RAW）、裁剪以及基于本地 AI 模型的抠图（rembg u2net，CPU 推理，
