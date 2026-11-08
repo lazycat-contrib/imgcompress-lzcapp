@@ -1,0 +1,18 @@
+package: community.lazycat.app.imgcompress
+name: ImgCompress
+version: 1.0.0-rc.9
+description: "Self-hosted image processing toolbox: compression, format conversion (70+ formats incl. PSD/HEIC/RAW), cropping and local AI background removal in a single web UI."
+min_os_version: "1.5.0"
+homepage: https://github.com/karimz1/imgcompress
+author: karimz1
+license: "GPL-3.0"
+permissions:
+  required:
+    - net.internet
+locales:
+  zh:
+    name: ImgCompress
+    description: "自托管图片处理工具箱：压缩、70+ 格式互转（含 PSD/HEIC/RAW）、裁剪与本地 AI 抠图，全部在浏览器中完成，文件不出服务器。"
+  en:
+    name: ImgCompress
+    description: "Self-hosted image toolbox: compression, 70+ format conversion (PSD/HEIC/RAW), cropping and local AI background removal."

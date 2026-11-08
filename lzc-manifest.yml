@@ -1,0 +1,36 @@
+application:
+  subdomain: imgcompress
+  multi_instance: false
+  # No public_path: the app has no built-in authentication at all (upstream
+  # README: "The app has no login"). Platform entry authentication is the
+  # only gate; do not expose this app to untrusted networks.
+  upstreams:
+    - location: /package-licenses/
+      backend: file:///lzcapp/pkg/content/licenses/
+    - location: /
+      backend: http://imgcompress:5000/
+
+services:
+  imgcompress:
+    # upstream: docker.io/karimz1/imgcompress:1.0.0-rc.9 (amd64 sha256:212a8186fd869dd6db)
+    image: docker.1ms.run/karimz1/imgcompress:1.0.0-rc.9
+    environment:
+      - TZ=Asia/Shanghai
+      # keep storage management off: app has no built-in auth (upstream README),
+      # the platform entry authentication is the only gate
+      - DISABLE_STORAGE_MANAGEMENT=true
+    # no binds: temporary_storage=/tmp inside container, auto-cleaned (app.json)
+usage: |
+  ImgCompress 是一个自托管的图片处理工具箱：压缩、格式转换（支持 70+ 种输入格式，
+  含 PSD / HEIC / RAW）、裁剪以及基于本地 AI 模型的抠图（rembg u2net，CPU 推理，
+  不上传任何外部服务）。
+
+  说明：
+  - 应用自身没有任何登录/账号体系（官方 README 明示 "The app has no login"），
+    因此本包未使用 public_path，由懒猫入口鉴权保护，请勿自行对外开放。
+  - 存储管理功能已按上游安全建议关闭（DISABLE_STORAGE_MANAGEMENT=true），
+    处理结果请在任务页直接下载，不会长期保存在服务器上。
+  - 文件处理均为临时存储（容器内 /tmp，最长 48 小时自动清理），卸载应用不留残留。
+  - 首次使用 AI 抠图功能时应用会自动下载 u2net 模型（约 170MB），需稍等片刻。
+  - 本包未做实机验证，功能以官方文档为准：https://github.com/karimz1/imgcompress
+  - 许可证 GPL-3.0，随包分发，见 /package-licenses/。
